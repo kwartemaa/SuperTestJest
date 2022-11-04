@@ -2,6 +2,7 @@ import request from "supertest";
 import { baseUrl } from "../../supertest.config";
 
 let accessToken: string
+let orderId: string
 describe("tests", ()=>{
     beforeAll( async()=>{
        const authentication = "/api-clients/"
@@ -49,6 +50,7 @@ describe("tests", ()=>{
         const orderStatus = response.body
         expect(orderStatus).toHaveProperty("orderId")
         expect(orderStatus).toHaveProperty("created", true)
+        orderId = orderStatus["orderId"]
     })
 
     it('should get all orders', async()=>{
@@ -60,7 +62,18 @@ describe("tests", ()=>{
         console.log(orderSummary)
     })
 
-    
+    it('should update an existing order', async()=>{
+        const orderUpdate = "/orders/"+ orderId
+        const updateInfo = {
+            "customerName": "Kwartemaa"
+          }
+        await request(baseUrl).patch(orderUpdate).set("Authorization", accessToken).send(updateInfo).expect(204)
+        
+
+
+
+
+    })
 
     
 })
