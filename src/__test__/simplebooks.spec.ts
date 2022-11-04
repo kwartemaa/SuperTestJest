@@ -71,8 +71,11 @@ describe("tests", ()=>{
         
 
 
+    })
 
-
+    it('should delete an order', async()=>{
+        const deleteOrder = "/orders/"+ orderId
+        await request(baseUrl).delete(deleteOrder).set("Authorization", accessToken).expect(204)
     })
 
     
